@@ -22,6 +22,7 @@
 		5D06754E1FB88E8100799367 /* StoryboardIdentifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D06754D1FB88E8100799367 /* StoryboardIdentifiable.swift */; };
 		5D0675501FB88E9D00799367 /* UIStoryboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D06754F1FB88E9D00799367 /* UIStoryboard.swift */; };
 		5D0675521FB88F3A00799367 /* RestaurantDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0675511FB88F3A00799367 /* RestaurantDetailsViewController.swift */; };
+		5D6A48921FB8D76F001EBE8F /* UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6A48911FB8D76F001EBE8F /* UITableView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		5D06754D1FB88E8100799367 /* StoryboardIdentifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryboardIdentifiable.swift; sourceTree = "<group>"; };
 		5D06754F1FB88E9D00799367 /* UIStoryboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStoryboard.swift; sourceTree = "<group>"; };
 		5D0675511FB88F3A00799367 /* RestaurantDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantDetailsViewController.swift; sourceTree = "<group>"; };
+		5D6A48911FB8D76F001EBE8F /* UITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +122,7 @@
 				5D0675411FB84B9500799367 /* Int.swift */,
 				5D0675481FB8780900799367 /* Double.swift */,
 				5D06754A1FB87D5900799367 /* UIViewController.swift */,
+				5D6A48911FB8D76F001EBE8F /* UITableView.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -248,6 +251,7 @@
 				5D0675461FB861BF00799367 /* APIConstants.swift in Sources */,
 				5D0675421FB84B9500799367 /* Int.swift in Sources */,
 				5D06753D1FB8491900799367 /* NetworkRequest.swift in Sources */,
+				5D6A48921FB8D76F001EBE8F /* UITableView.swift in Sources */,
 				5D0675491FB8780900799367 /* Double.swift in Sources */,
 				5D0675281FB843FB00799367 /* AppDelegate.swift in Sources */,
 			);
