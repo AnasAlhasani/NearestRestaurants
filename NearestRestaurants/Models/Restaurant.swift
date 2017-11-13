@@ -46,7 +46,7 @@ class Restaurant: ApiResource {
             restaurant.latitude = location[Keys.latitude] as? Double ?? 0
             restaurant.longitude = location[Keys.longitude] as? Double ?? 0
             restaurant.longitude = location[Keys.longitude] as? Double ?? 0
-            restaurant.distance = (location[Keys.distance] as? Double ?? 0).stringValue
+            restaurant.distance = (location[Keys.distance] as? Double ?? 0).stringValue+"m"
             restaurants.append(restaurant)
         }
 

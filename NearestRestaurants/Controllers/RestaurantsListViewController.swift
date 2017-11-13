@@ -41,6 +41,7 @@ class RestaurantsListViewController: UIViewController {
 private extension RestaurantsListViewController {
     
     func configureTableView() {
+        tableView.register(RestaurantInfoCell.self)
         tableView.tableFooterView = UIView(frame: .zero)
     }
 }
@@ -80,10 +81,9 @@ private extension RestaurantsListViewController {
     
     func handleRequestError() {
         tableView.refreshControl?.endRefreshing()
+        
         displayAlert(onComplete: { [weak self] in
-    
             guard let strongSelf = self else { return }
-            
             strongSelf.getNearestRestaurants()
         })
     }
@@ -97,10 +97,9 @@ extension RestaurantsListViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
-        let restaurant = restaurants[indexPath.row]
-        cell.textLabel?.text = restaurant.name
+        let cell: RestaurantInfoCell = tableView.dequeueReusableCell(at: indexPath)
         cell.selectionStyle = .none
+        cell.restaurant = restaurants[indexPath.row]
         return cell
     }
 }

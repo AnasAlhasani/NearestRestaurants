@@ -15,7 +15,7 @@ extension UIViewController: StoryboardIdentifiable {
         
         let alert = UIAlertController(
             title: "Info",
-            message: "Sorry, the service is currently not available, please try again later.",
+            message: "Sorry, something went wrong , please try again later.",
             preferredStyle: .alert
         )
         
