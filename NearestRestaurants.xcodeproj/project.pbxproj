@@ -24,6 +24,8 @@
 		5D6A48921FB8D76F001EBE8F /* UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6A48911FB8D76F001EBE8F /* UITableView.swift */; };
 		5D6A48961FB8D7FB001EBE8F /* RestaurantInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6A48941FB8D7FB001EBE8F /* RestaurantInfoCell.swift */; };
 		5D6A48971FB8D7FB001EBE8F /* RestaurantInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D6A48951FB8D7FB001EBE8F /* RestaurantInfoCell.xib */; };
+		5DB55AA81FB9B07C0066BCC7 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB55AA71FB9B07C0066BCC7 /* Constants.swift */; };
+		5DB55AAA1FB9B0CB0066BCC7 /* LocationClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB55AA91FB9B0CB0066BCC7 /* LocationClient.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +48,8 @@
 		5D6A48911FB8D76F001EBE8F /* UITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableView.swift; sourceTree = "<group>"; };
 		5D6A48941FB8D7FB001EBE8F /* RestaurantInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantInfoCell.swift; sourceTree = "<group>"; };
 		5D6A48951FB8D7FB001EBE8F /* RestaurantInfoCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RestaurantInfoCell.xib; sourceTree = "<group>"; };
+		5DB55AA71FB9B07C0066BCC7 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		5DB55AA91FB9B0CB0066BCC7 /* LocationClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationClient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,7 +87,7 @@
 				5D0675541FB89D3E00799367 /* Views */,
 				5D0675531FB89D2900799367 /* Controllers */,
 				5D06753B1FB848E700799367 /* Networking */,
-				5D0675401FB84B8000799367 /* Extensions */,
+				5DB55AA61FB9B05A0066BCC7 /* Helpers */,
 				5D06753A1FB848AD00799367 /* Supporting Files */,
 			);
 			path = NearestRestaurants;
@@ -188,6 +192,16 @@
 			path = Custom;
 			sourceTree = "<group>";
 		};
+		5DB55AA61FB9B05A0066BCC7 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				5D0675401FB84B8000799367 /* Extensions */,
+				5DB55AA71FB9B07C0066BCC7 /* Constants.swift */,
+				5DB55AA91FB9B0CB0066BCC7 /* LocationClient.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -220,7 +234,7 @@
 				TargetAttributes = {
 					5D0675231FB843FB00799367 = {
 						CreatedOnToolsVersion = 9.1;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -268,10 +282,12 @@
 				5D06754B1FB87D5900799367 /* UIViewController.swift in Sources */,
 				5D0675441FB85CEC00799367 /* Restaurant.swift in Sources */,
 				5D06754E1FB88E8100799367 /* StoryboardIdentifiable.swift in Sources */,
+				5DB55AAA1FB9B0CB0066BCC7 /* LocationClient.swift in Sources */,
 				5D0675521FB88F3A00799367 /* RestaurantDetailsViewController.swift in Sources */,
 				5D0675461FB861BF00799367 /* APIConstants.swift in Sources */,
 				5D0675421FB84B9500799367 /* Int.swift in Sources */,
 				5D06753D1FB8491900799367 /* NetworkRequest.swift in Sources */,
+				5DB55AA81FB9B07C0066BCC7 /* Constants.swift in Sources */,
 				5D6A48921FB8D76F001EBE8F /* UITableView.swift in Sources */,
 				5D0675281FB843FB00799367 /* AppDelegate.swift in Sources */,
 			);
@@ -410,8 +426,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8TGLZGNSV2;
 				INFOPLIST_FILE = "$(SRCROOT)/NearestRestaurants/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -427,8 +444,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8TGLZGNSV2;
 				INFOPLIST_FILE = "$(SRCROOT)/NearestRestaurants/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

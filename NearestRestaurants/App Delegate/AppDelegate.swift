@@ -26,13 +26,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //MARK: - Configuration
 private extension AppDelegate {
     
-    struct Color {
-        static let NavigationBar = UIColor(red: 19/255.0, green: 78/255.0, blue: 137/255.0, alpha: 1.0)
-    }
-    
     func configureNavigationBar() {
         UINavigationBar.appearance().tintColor = UIColor.white
-        UINavigationBar.appearance().barTintColor = Color.NavigationBar
+        UINavigationBar.appearance().barTintColor = Constant.Color.NavigationBar
         UINavigationBar.appearance().titleTextAttributes = [
             NSAttributedStringKey.foregroundColor: UIColor.white,
             NSAttributedStringKey.font: UIFont.systemFont(ofSize: 15, weight: UIFont.Weight.bold) 

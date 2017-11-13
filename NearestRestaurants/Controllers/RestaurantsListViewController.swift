@@ -31,6 +31,7 @@ class RestaurantsListViewController: UIViewController {
         super.viewDidLoad()
         
         title = "Nearest Restaurants"
+        LocationClient.shared.startUpdatinglocation()
         configureTableView()
         getNearestRestaurants()
     }
