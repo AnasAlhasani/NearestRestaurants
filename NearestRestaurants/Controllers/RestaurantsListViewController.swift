@@ -64,19 +64,48 @@ private extension RestaurantsListViewController {
         let request = ApiRequest(resource: Restaurant())
         
         tableView.refreshControl?.beginRefreshing()
-        
-        request.loadData(withParameters: parameters, onSuccess: { [weak self] items in
+
+        request.load(withURLParameters: parameters, onSuccess: { [weak self] items in
             
             guard let strongSelf = self else { return }
             guard let items = items else { return }
             
             strongSelf.restaurants = items.sorted(by: { $0.distance < $1.distance })
-            strongSelf.tableView.reloadData()
-            strongSelf.tableView.refreshControl?.endRefreshing()
+            
+            let imageURLs = strongSelf.restaurants.map({ $0.imageURL })
+            strongSelf.getImages(fromURLs: imageURLs, onComplete: {
+                strongSelf.tableView.reloadData()
+                strongSelf.tableView.refreshControl?.endRefreshing()
+            })
             
         }) { [weak self] error in
             guard let strongSelf = self else { return }
             strongSelf.handleRequestError()
+        }
+    }
+    
+    func getImages(fromURLs urls: [URL?],
+                   onComplete: @escaping () -> Void) {
+        
+        for (index, url) in urls.enumerated() {
+            
+            guard let url = url else { continue }
+            print(url)
+            let imageRequest = ImageRequest(url: url)
+            
+            imageRequest.load(withURLParameters: nil, onSuccess: { [weak self] image in
+                
+                guard let strongSelf = self else { return }
+                guard let restaurantImage = image else { return }
+                strongSelf.restaurants[index].image = restaurantImage
+                guard index == urls.endIndex - 1 else { return }
+                onComplete()
+                
+            }, onFailure: { error in
+                print(error.localizedDescription)
+                guard index == urls.endIndex - 1 else { return }
+                onComplete()
+            })
         }
     }
     

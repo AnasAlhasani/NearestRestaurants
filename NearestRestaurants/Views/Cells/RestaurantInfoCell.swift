@@ -16,6 +16,14 @@ class RestaurantInfoCell: UITableViewCell {
     @IBOutlet private weak var distanceLabel: UILabel!
     @IBOutlet private weak var restaurantImageView: UIImageView!
     
+    //MARK: LifeCycle
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        restaurantImageView.layer.cornerRadius = restaurantImageView.bounds.height / 2
+        restaurantImageView.clipsToBounds = true
+    }
+    
     //MARK: Properties
     var restaurant: Restaurant? {
         didSet {

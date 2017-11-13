@@ -6,46 +6,29 @@
 //  Copyright © 2017 Anas Alhasani. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
-typealias JSON = [String: Any]
 
-protocol ApiResource {
+//MARK: - Network Request & Implementation
+private protocol NetworkRequest: class {
+    
     associatedtype Model
-    func makeModel(from json: JSON) -> [Model]
-}
-
-private extension ApiResource {
     
-    func getURLFromParameters(_ parameters: [String: Any]) -> URL {
-        var components = URLComponents()
-        components.scheme = Foursquare.URL.Scheme
-        components.host = Foursquare.URL.Host
-        components.path = Foursquare.URL.Path
-        components.queryItems = [URLQueryItem]()
-        
-        for (key, value) in parameters {
-            let queryItem = URLQueryItem(name: key, value: "\(value)")
-            components.queryItems?.append(queryItem)
-        }
-        return components.url!
-    }
+    func decode(_ data: Data) -> Model?
+    
+    func load(withURLParameters parameters: JSON?,
+              onSuccess success: @escaping (Model?) -> Void,
+              onFailure failure: @escaping (NetworkError) -> Void)
     
 }
 
-class ApiRequest<Resource> where Resource: ApiResource {
+private extension NetworkRequest {
     
-    private let resource: Resource
-    
-    init(resource: Resource) {
-        self.resource = resource
-    }
-
-    func loadData(withParameters parameters: JSON,
-                  onSuccess success: @escaping ([Resource.Model]?) -> Void,
-                  onFailure failure: @escaping (NetworkError) -> Void) {
+    func load(_ url: URL,
+              onSuccess success: @escaping (Model?) -> Void,
+              onFailure failure: @escaping (NetworkError) -> Void) {
         
-        let success: ([Resource.Model]?) -> Void = { model in
+        let success: (Model?) -> Void = { model in
             DispatchQueue.main.async { success(model) }
         }
         
@@ -55,15 +38,11 @@ class ApiRequest<Resource> where Resource: ApiResource {
         
         let session = URLSession.shared
         
-        let url = resource.getURLFromParameters(parameters)
-        
         let task = session.dataTask(with: url) { (data, response, error) in
             
             guard let httpResponse = response as? HTTPURLResponse,
                 httpResponse.statusCode.isSuccessHTTPCode,
-                let data = data,
-                let jsonObject = try? JSONSerialization.jsonObject(with: data),
-                let json = jsonObject as? JSON else {
+                let data = data else {
                     if let error = error {
                         failure(NetworkError(error: error))
                     } else {
@@ -72,23 +51,60 @@ class ApiRequest<Resource> where Resource: ApiResource {
                     return
             }
             
-            success(self.resource.makeModel(from: json))
-            
+            success(self.decode(data))
         }
-        task.resume()
         
+        task.resume()
     }
 }
 
+//MARK: - Api Request
+class ApiRequest<Resource: ApiResource>: NetworkRequest {
+    private let resource: Resource
+    
+    init(resource: Resource) {
+        self.resource = resource
+    }
+    
+    func decode(_ data: Data) -> [Resource.Model]? {
+        guard let json = try? JSONSerialization.jsonObject(with: data, options: .mutableContainers) else {
+            return nil
+        }
+        guard let jsonSerialization = json as? JSON else {
+            return nil
+        }
+        return resource.makeModel(from: jsonSerialization)
 
+    }
+    
+    func load(withURLParameters parameters: JSON?,
+              onSuccess success: @escaping ([Resource.Model]?) -> Void,
+              onFailure failure: @escaping (NetworkError) -> Void) {
+        
+        let url = resource.getURLFromParameters(parameters ?? [:])
+        load(url, onSuccess: success, onFailure: failure)
+    }
+    
+}
 
+//MARK: - Image Request
+class ImageRequest: NetworkRequest {
+    
+    private let url: URL
+    
+    init(url: URL) {
+        self.url = url
+    }
+    
+    func decode(_ data: Data) -> UIImage? {
+        return UIImage(data: data)
+    }
+    
+    
+    func load(withURLParameters parameters: JSON?,
+              onSuccess success: @escaping (UIImage?) -> Void,
+              onFailure failure: @escaping (NetworkError) -> Void) {
 
-
-
-
-
-
-
-
-
-
+        load(url, onSuccess: success, onFailure: failure)
+    }
+}
