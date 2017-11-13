@@ -63,6 +63,7 @@
                 <outlet property="addressLabel" destination="OYE-qd-oJZ" id="osG-CM-72P"/>
                 <outlet property="distanceLabel" destination="7n6-HT-hC3" id="08m-p5-4Rd"/>
                 <outlet property="nameLabel" destination="2Lr-Q0-K6i" id="zUR-9h-LXn"/>
+                <outlet property="restaurantImageView" destination="xdr-YH-JM3" id="ncQ-X0-drt"/>
             </connections>
             <point key="canvasLocation" x="34" y="35"/>
         </tableViewCell>

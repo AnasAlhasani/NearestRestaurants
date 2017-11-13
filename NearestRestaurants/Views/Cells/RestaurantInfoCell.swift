@@ -14,11 +14,13 @@ class RestaurantInfoCell: UITableViewCell {
     @IBOutlet private weak var nameLabel: UILabel!
     @IBOutlet private weak var addressLabel: UILabel!
     @IBOutlet private weak var distanceLabel: UILabel!
+    @IBOutlet private weak var restaurantImageView: UIImageView!
     
     //MARK: Properties
     var restaurant: Restaurant? {
         didSet {
             if let restaurant = restaurant {
+                restaurantImageView.image = restaurant.image
                 nameLabel.text = restaurant.name
                 addressLabel.text = restaurant.category
                 distanceLabel.text = restaurant.distanceDescription

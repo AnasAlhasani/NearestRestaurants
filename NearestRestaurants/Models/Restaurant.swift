@@ -6,7 +6,7 @@
 //  Copyright © 2017 Anas Alhasani. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class Restaurant: ApiResource {
     
@@ -24,15 +24,21 @@ class Restaurant: ApiResource {
         static let distance = "distance"
         static let categories = "categories"
         static let categoryName = "shortName"
+        static let icon = "icon"
+        static let prefix = "prefix"
+        static let suffix = "suffix"
     }
     
     //MARK: Properites
     private var address = ""
     var name = ""
+    var imageURL: URL?
+    var image: UIImage = #imageLiteral(resourceName: "RestaurantIcon2")
     var category = ""
     var latitude: Double = 0
     var longitude: Double = 0
     var distance: Int = 0
+    
     var distanceDescription: String {
         return "\(distance) m \(address)"
     }
@@ -58,11 +64,17 @@ class Restaurant: ApiResource {
             restaurant.address = location[Keys.address] as? String ?? ""
             restaurant.distance = location[Keys.distance] as? Int ?? 0
             restaurant.category = categories[0][Keys.categoryName] as? String ?? ""
+            let icon = categories[0][Keys.icon] as? JSON ?? [:]
+            let prefix = icon[Keys.prefix] as? String ?? ""
+            let suffix = icon[Keys.suffix] as? String ?? ""
+            restaurant.imageURL = URL(string: prefix+suffix) ?? nil
+
             restaurants.append(restaurant)
         }
         
         return restaurants
     }
     
+  
     
 }
