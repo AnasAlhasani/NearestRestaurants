@@ -20,8 +20,8 @@ class RestaurantInfoCell: UITableViewCell {
         didSet {
             if let restaurant = restaurant {
                 nameLabel.text = restaurant.name
-                addressLabel.text = restaurant.name
-                distanceLabel.text = restaurant.distance
+                addressLabel.text = restaurant.category
+                distanceLabel.text = restaurant.distanceDescription
             }
         }
     }

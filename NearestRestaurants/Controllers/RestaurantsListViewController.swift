@@ -42,6 +42,7 @@ private extension RestaurantsListViewController {
     
     func configureTableView() {
         tableView.register(RestaurantInfoCell.self)
+        tableView.separatorInset = .zero
         tableView.tableFooterView = UIView(frame: .zero)
     }
 }
@@ -51,8 +52,8 @@ private extension RestaurantsListViewController {
     
     @objc func getNearestRestaurants() {
         let parameters: [String: Any] = [
-            Foursquare.SearchKeys.Location: "32.0212342,35.8391398",
-            Foursquare.SearchKeys.v : "20160607",
+            Foursquare.SearchKeys.Location: "31.9685694,35.898531",
+            Foursquare.SearchKeys.v : "20170901",
             Foursquare.SearchKeys.Intent: "food",
             Foursquare.SearchKeys.Limit: "10",
             Foursquare.Client.ID.key: Foursquare.Client.ID.value,
@@ -68,12 +69,11 @@ private extension RestaurantsListViewController {
             guard let strongSelf = self else { return }
             guard let items = items else { return }
             
-            strongSelf.restaurants = items
+            strongSelf.restaurants = items.sorted(by: { $0.distance < $1.distance })
             strongSelf.tableView.reloadData()
             strongSelf.tableView.refreshControl?.endRefreshing()
             
         }) { [weak self] error in
-            
             guard let strongSelf = self else { return }
             strongSelf.handleRequestError()
         }

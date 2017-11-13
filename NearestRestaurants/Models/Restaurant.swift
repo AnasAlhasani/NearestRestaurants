@@ -18,16 +18,25 @@ class Restaurant: ApiResource {
         static let venue = "venue"
         static let name = "name"
         static let location = "location"
+        static let address = "address"
         static let latitude = "lat"
         static let longitude = "lng"
         static let distance = "distance"
+        static let categories = "categories"
+        static let categoryName = "shortName"
     }
     
     //MARK: Properites
+    private var address = ""
     var name = ""
+    var category = ""
     var latitude: Double = 0
     var longitude: Double = 0
-    var distance: String = ""
+    var distance: Int = 0
+    var distanceDescription: String {
+        return "\(distance) m \(address)"
+    }
+    
     
     //MARK: Parser
     func makeModel(from json: JSON) -> [Restaurant] {
@@ -42,14 +51,16 @@ class Restaurant: ApiResource {
             
             let venue = item[Keys.venue] as? JSON ?? [:]
             let location = venue[Keys.location] as? JSON ?? [:]
-            restaurant.name = venue[Keys.name] as? String ?? "-"
+            let categories = venue[Keys.categories] as? [JSON] ?? []
+            restaurant.name = venue[Keys.name] as? String ?? ""
             restaurant.latitude = location[Keys.latitude] as? Double ?? 0
             restaurant.longitude = location[Keys.longitude] as? Double ?? 0
-            restaurant.longitude = location[Keys.longitude] as? Double ?? 0
-            restaurant.distance = (location[Keys.distance] as? Double ?? 0).stringValue+"m"
+            restaurant.address = location[Keys.address] as? String ?? ""
+            restaurant.distance = location[Keys.distance] as? Int ?? 0
+            restaurant.category = categories[0][Keys.categoryName] as? String ?? ""
             restaurants.append(restaurant)
         }
-
+        
         return restaurants
     }
     
