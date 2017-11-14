@@ -27,6 +27,7 @@
 		5D6A48971FB8D7FB001EBE8F /* RestaurantInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D6A48951FB8D7FB001EBE8F /* RestaurantInfoCell.xib */; };
 		5DB55AA81FB9B07C0066BCC7 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB55AA71FB9B07C0066BCC7 /* Constants.swift */; };
 		5DB55AAA1FB9B0CB0066BCC7 /* LocationClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB55AA91FB9B0CB0066BCC7 /* LocationClient.swift */; };
+		5DB69F7D1FBB245300FE9983 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB69F7C1FBB245300FE9983 /* Date.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +53,7 @@
 		5D6A48951FB8D7FB001EBE8F /* RestaurantInfoCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RestaurantInfoCell.xib; sourceTree = "<group>"; };
 		5DB55AA71FB9B07C0066BCC7 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		5DB55AA91FB9B0CB0066BCC7 /* LocationClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationClient.swift; sourceTree = "<group>"; };
+		5DB69F7C1FBB245300FE9983 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +133,7 @@
 				5D0675411FB84B9500799367 /* Int.swift */,
 				5D06754A1FB87D5900799367 /* UIViewController.swift */,
 				5D6A48911FB8D76F001EBE8F /* UITableView.swift */,
+				5DB69F7C1FBB245300FE9983 /* Date.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -284,6 +287,7 @@
 				5D06753F1FB84B3600799367 /* NetworkError.swift in Sources */,
 				5D06754B1FB87D5900799367 /* UIViewController.swift in Sources */,
 				5D0675441FB85CEC00799367 /* Restaurant.swift in Sources */,
+				5DB69F7D1FBB245300FE9983 /* Date.swift in Sources */,
 				5D06754E1FB88E8100799367 /* StoryboardIdentifiable.swift in Sources */,
 				5DB55AAA1FB9B0CB0066BCC7 /* LocationClient.swift in Sources */,
 				5D0675521FB88F3A00799367 /* RestaurantDetailsViewController.swift in Sources */,

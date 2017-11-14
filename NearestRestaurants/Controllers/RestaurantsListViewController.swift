@@ -54,7 +54,7 @@ private extension RestaurantsListViewController {
     @objc func getNearestRestaurants() {
         let parameters: [String: Any] = [
             Foursquare.SearchKeys.Location: "31.9685694,35.898531",
-            Foursquare.SearchKeys.v : "20170901",
+            Foursquare.SearchKeys.venueDate : Date().getStringDate(withFormat: .venue),
             Foursquare.SearchKeys.Intent: "food",
             Foursquare.SearchKeys.Limit: "10",
             Foursquare.Client.ID.key: Foursquare.Client.ID.value,

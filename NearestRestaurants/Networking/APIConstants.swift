@@ -39,7 +39,7 @@ struct Foursquare {
         static let Location = "ll"
         static let Intent = "intent"
         static let Limit = "limit"
-        static let v = "v"
+        static let venueDate = "v"
     }
     
 }

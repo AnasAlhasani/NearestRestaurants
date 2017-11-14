@@ -17,5 +17,9 @@ struct Constant {
     struct NotificationCenterKeys {
         static let updateLocations = NSNotification.Name(rawValue: "didUpdateLocations")
     }
+    
+    enum DateFormat: String {
+        case venue = "yyyyMMdd"
+    } 
 }
 
