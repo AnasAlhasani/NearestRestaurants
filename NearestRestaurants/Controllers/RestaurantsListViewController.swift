@@ -33,7 +33,12 @@ class RestaurantsListViewController: UIViewController {
         title = "Nearest Restaurants"
         LocationClient.shared.startUpdatinglocation()
         configureTableView()
-        getNearestRestaurants()
+
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        NotificationCenter.default.addObserver(self, selector: #selector(getNearestRestaurants), name: Constant.NotificationCenterKeys.updateLocations, object: nil)
     }
 
 }
@@ -53,13 +58,17 @@ private extension RestaurantsListViewController {
     
     @objc func getNearestRestaurants() {
         let parameters: [String: Any] = [
-            Foursquare.SearchKeys.Location: "31.9685694,35.898531",
+            Foursquare.SearchKeys.Location: "\(LocationClient.shared.currentLatitude),\(LocationClient.shared.currentLongitude)",
             Foursquare.SearchKeys.venueDate : Date().getStringDate(withFormat: .venue),
             Foursquare.SearchKeys.Intent: "food",
             Foursquare.SearchKeys.Limit: "10",
             Foursquare.Client.ID.key: Foursquare.Client.ID.value,
             Foursquare.Client.Secret.key: Foursquare.Client.Secret.value
         ]
+        
+        print("Lat:"+LocationClient.shared.currentLatitude)
+        print("Lon:"+LocationClient.shared.currentLongitude)
+        print("***********************")
         
         let request = ApiRequest(resource: Restaurant())
         
@@ -90,7 +99,6 @@ private extension RestaurantsListViewController {
         for (index, url) in urls.enumerated() {
             
             guard let url = url else { continue }
-            print(url)
             let imageRequest = ImageRequest(url: url)
             
             imageRequest.load(withURLParameters: nil, onSuccess: { [weak self] image in
