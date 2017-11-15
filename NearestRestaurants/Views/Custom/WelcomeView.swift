@@ -1,5 +1,5 @@
 //
-//  PermissionView.swift
+//  WelcomeView.swift
 //  NearestRestaurants
 //
 //  Created by Anas Alhasani on 11/15/17.
@@ -8,33 +8,30 @@
 
 import UIKit
 
-class PermissionView: UIView {
+class WelcomeView: UIView {
     
     //MARK: Outlets
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var messageLabel: UILabel!
-    @IBOutlet private weak var allowButton: UIButton!
+    @IBOutlet private weak var startButton: UIButton!
     
     //MARK: Properties
     var onButtonTap: (() -> Void)?
     
-    var permission: (title: String, message: String)? {
-        didSet {
-            if let permission = permission {
-                titleLabel.text = permission.title
-                messageLabel.text = permission.message
-            }
-        }
-    }
-    
     //MARK: LifeCycle
     override func awakeFromNib() {
         super.awakeFromNib()
-        allowButton.layer.cornerRadius = 5
+        startButton.layer.cornerRadius = 5
     }
 
+    //Helper method
+    func setPermession(title: String, message: String) {
+        titleLabel.text = title
+        messageLabel.text = message
+    }
+    
     //MARK: Action
-    @IBAction func allowButtonTapped(_ sender: UIButton) {
+    @IBAction func startButtonTapped(_ sender: UIButton) {
         onButtonTap?()
     }
     
