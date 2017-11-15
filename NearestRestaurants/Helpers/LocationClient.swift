@@ -11,7 +11,7 @@ import CoreLocation
 
 class LocationClient: NSObject {
     
-    private var currentLocation = CLLocation()
+    var currentLocation = CLLocation()
     private var locationManager: CLLocationManager!
     
     private lazy var dispatchOnce: () -> Void = {

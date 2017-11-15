@@ -18,6 +18,15 @@ struct Constant {
         static let updateLocations = NSNotification.Name(rawValue: "didUpdateLocations")
     }
     
+    enum NavigationApp: String {
+        case googleMaps = "Google Maps"
+        case appleMaps = "Apple Maps"
+        
+        var title: String {
+            return rawValue
+        }
+    }
+    
     enum DateFormat: String {
         case venue = "yyyyMMdd"
     } 

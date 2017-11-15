@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Restaurant: ApiResource {
+class Restaurant {
     
     //MARK: Properites
     private var address = ""
@@ -23,42 +23,7 @@ class Restaurant: ApiResource {
     var distanceDescription: String {
         return "\(distance) m \(address)"
     }
-    
-    
-    //MARK: Parser
-    func makeModel(from json: JSON) -> [Restaurant] {
-        
-        var restaurants: [Restaurant] = []
-        
-        let response = json[Keys.reponse] as? JSON ?? [:]
-        let group = response[Keys.group] as? JSON ?? [:]
-        let results = group[Keys.results] as? [JSON] ?? []
-        
-        for item in results {
-            let restaurant = Restaurant()
-            
-            let venue = item[Keys.venue] as? JSON ?? [:]
-            let location = venue[Keys.location] as? JSON ?? [:]
-            let categories = venue[Keys.categories] as? [JSON] ?? []
-            restaurant.name = venue[Keys.name] as? String ?? ""
-            restaurant.latitude = location[Keys.latitude] as? Double ?? 0
-            restaurant.longitude = location[Keys.longitude] as? Double ?? 0
-            restaurant.address = location[Keys.address] as? String ?? ""
-            restaurant.distance = location[Keys.distance] as? Int ?? 0
-            restaurant.category = categories[0][Keys.categoryName] as? String ?? ""
-            let photo = item[Keys.photo] as? JSON ?? [:]
-            let prefix = photo[Keys.prefix] as? String ?? ""
-            let suffix = photo[Keys.suffix] as? String ?? ""
-            restaurant.imageURL = URL(string: prefix+"200"+suffix) ?? nil
-
-            restaurants.append(restaurant)
-        }
-        
-        return restaurants
-    }
-    
-  
-    
+ 
 }
 
 //MARK: - Constants
@@ -80,5 +45,42 @@ private extension Restaurant {
         static let photo = "photo"
         static let prefix = "prefix"
         static let suffix = "suffix"
+    }
+}
+
+//MARK: - Parser
+extension Restaurant: ApiResource {
+    
+    func makeModel(from json: JSON) -> [Restaurant] {
+        
+        var restaurants: [Restaurant] = []
+        
+        let response = json[Keys.reponse] as? JSON ?? [:]
+        let group = response[Keys.group] as? JSON ?? [:]
+        let results = group[Keys.results] as? [JSON] ?? []
+        
+        for item in results {
+            let restaurant = Restaurant()
+            
+            let venue = item[Keys.venue] as? JSON ?? [:]
+            let location = venue[Keys.location] as? JSON ?? [:]
+            let categories = venue[Keys.categories] as? [JSON] ?? []
+            
+            let photo = item[Keys.photo] as? JSON ?? [:]
+            let prefix = photo[Keys.prefix] as? String ?? ""
+            let suffix = photo[Keys.suffix] as? String ?? ""
+            
+            restaurant.name = venue[Keys.name] as? String ?? ""
+            restaurant.latitude = location[Keys.latitude] as? Double ?? 0
+            restaurant.longitude = location[Keys.longitude] as? Double ?? 0
+            restaurant.address = location[Keys.address] as? String ?? ""
+            restaurant.distance = location[Keys.distance] as? Int ?? 0
+            restaurant.category = categories[0][Keys.categoryName] as? String ?? ""
+            restaurant.imageURL = URL(string: prefix+"200"+suffix) ?? nil
+            
+            restaurants.append(restaurant)
+        }
+        
+        return restaurants
     }
 }

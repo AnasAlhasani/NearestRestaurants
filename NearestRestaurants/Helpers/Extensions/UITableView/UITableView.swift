@@ -8,21 +8,6 @@
 
 import UIKit
 
-protocol CellIdentifiable {
-    
-    static var cellIdentifier: String { get }
-    
-}
-
-extension CellIdentifiable where Self: UITableViewCell {
-    
-    static var cellIdentifier: String {
-        
-        return String(describing: self)
-        
-    }
-}
-
 extension UITableViewCell: CellIdentifiable { }
 
 extension UITableView {

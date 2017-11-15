@@ -22,6 +22,9 @@
 		5D0675501FB88E9D00799367 /* UIStoryboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D06754F1FB88E9D00799367 /* UIStoryboard.swift */; };
 		5D0675521FB88F3A00799367 /* RestaurantDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0675511FB88F3A00799367 /* RestaurantDetailsViewController.swift */; };
 		5D2FDAED1FBA0F6900D238B6 /* ApiResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2FDAEC1FBA0F6900D238B6 /* ApiResource.swift */; };
+		5D4DB6FC1FBC641400F0EC65 /* CellIdentifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4DB6FB1FBC641400F0EC65 /* CellIdentifiable.swift */; };
+		5D4DB71F1FBC745900F0EC65 /* PermissionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D4DB71E1FBC745900F0EC65 /* PermissionView.xib */; };
+		5D4DB7211FBC75EA00F0EC65 /* PermissionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4DB7201FBC75EA00F0EC65 /* PermissionView.swift */; };
 		5D6A48921FB8D76F001EBE8F /* UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6A48911FB8D76F001EBE8F /* UITableView.swift */; };
 		5D6A48961FB8D7FB001EBE8F /* RestaurantInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6A48941FB8D7FB001EBE8F /* RestaurantInfoCell.swift */; };
 		5D6A48971FB8D7FB001EBE8F /* RestaurantInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D6A48951FB8D7FB001EBE8F /* RestaurantInfoCell.xib */; };
@@ -48,6 +51,9 @@
 		5D06754F1FB88E9D00799367 /* UIStoryboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStoryboard.swift; sourceTree = "<group>"; };
 		5D0675511FB88F3A00799367 /* RestaurantDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantDetailsViewController.swift; sourceTree = "<group>"; };
 		5D2FDAEC1FBA0F6900D238B6 /* ApiResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiResource.swift; sourceTree = "<group>"; };
+		5D4DB6FB1FBC641400F0EC65 /* CellIdentifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellIdentifiable.swift; sourceTree = "<group>"; };
+		5D4DB71E1FBC745900F0EC65 /* PermissionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PermissionView.xib; sourceTree = "<group>"; };
+		5D4DB7201FBC75EA00F0EC65 /* PermissionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionView.swift; sourceTree = "<group>"; };
 		5D6A48911FB8D76F001EBE8F /* UITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableView.swift; sourceTree = "<group>"; };
 		5D6A48941FB8D7FB001EBE8F /* RestaurantInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantInfoCell.swift; sourceTree = "<group>"; };
 		5D6A48951FB8D7FB001EBE8F /* RestaurantInfoCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RestaurantInfoCell.xib; sourceTree = "<group>"; };
@@ -129,10 +135,10 @@
 		5D0675401FB84B8000799367 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				5D4DB6FD1FBC642E00F0EC65 /* UITableView */,
 				5D06754C1FB88E5400799367 /* UIStoryboard */,
-				5D0675411FB84B9500799367 /* Int.swift */,
 				5D06754A1FB87D5900799367 /* UIViewController.swift */,
-				5D6A48911FB8D76F001EBE8F /* UITableView.swift */,
+				5D0675411FB84B9500799367 /* Int.swift */,
 				5DB69F7C1FBB245300FE9983 /* Date.swift */,
 			);
 			path = Extensions;
@@ -182,6 +188,15 @@
 			path = "App Delegate";
 			sourceTree = "<group>";
 		};
+		5D4DB6FD1FBC642E00F0EC65 /* UITableView */ = {
+			isa = PBXGroup;
+			children = (
+				5D6A48911FB8D76F001EBE8F /* UITableView.swift */,
+				5D4DB6FB1FBC641400F0EC65 /* CellIdentifiable.swift */,
+			);
+			path = UITableView;
+			sourceTree = "<group>";
+		};
 		5D6A48931FB8D7AC001EBE8F /* Cells */ = {
 			isa = PBXGroup;
 			children = (
@@ -194,6 +209,8 @@
 		5D6A489C1FB8E98E001EBE8F /* Custom */ = {
 			isa = PBXGroup;
 			children = (
+				5D4DB7201FBC75EA00F0EC65 /* PermissionView.swift */,
+				5D4DB71E1FBC745900F0EC65 /* PermissionView.xib */,
 			);
 			path = Custom;
 			sourceTree = "<group>";
@@ -269,6 +286,7 @@
 			files = (
 				5D6A48971FB8D7FB001EBE8F /* RestaurantInfoCell.xib in Resources */,
 				5D0675321FB843FB00799367 /* LaunchScreen.storyboard in Resources */,
+				5D4DB71F1FBC745900F0EC65 /* PermissionView.xib in Resources */,
 				5D06752F1FB843FB00799367 /* Assets.xcassets in Resources */,
 				5D06752D1FB843FB00799367 /* Main.storyboard in Resources */,
 			);
@@ -282,6 +300,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5D6A48961FB8D7FB001EBE8F /* RestaurantInfoCell.swift in Sources */,
+				5D4DB6FC1FBC641400F0EC65 /* CellIdentifiable.swift in Sources */,
 				5D0675501FB88E9D00799367 /* UIStoryboard.swift in Sources */,
 				5D06752A1FB843FB00799367 /* RestaurantsListViewController.swift in Sources */,
 				5D06753F1FB84B3600799367 /* NetworkError.swift in Sources */,
@@ -297,6 +316,7 @@
 				5DB55AA81FB9B07C0066BCC7 /* Constants.swift in Sources */,
 				5D6A48921FB8D76F001EBE8F /* UITableView.swift in Sources */,
 				5D2FDAED1FBA0F6900D238B6 /* ApiResource.swift in Sources */,
+				5D4DB7211FBC75EA00F0EC65 /* PermissionView.swift in Sources */,
 				5D0675281FB843FB00799367 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -436,7 +456,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 8TGLZGNSV2;
+				DEVELOPMENT_TEAM = 5U36G94Q8F;
 				INFOPLIST_FILE = "$(SRCROOT)/NearestRestaurants/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -454,7 +474,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 8TGLZGNSV2;
+				DEVELOPMENT_TEAM = 5U36G94Q8F;
 				INFOPLIST_FILE = "$(SRCROOT)/NearestRestaurants/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

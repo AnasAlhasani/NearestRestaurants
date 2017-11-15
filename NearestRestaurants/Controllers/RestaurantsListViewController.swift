@@ -29,11 +29,14 @@ class RestaurantsListViewController: UIViewController {
     //MARK: View LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        title = "Nearest Restaurants"
         LocationClient.shared.startUpdatinglocation()
         configureTableView()
 
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        title = "Nearest Restaurants"
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -65,11 +68,7 @@ private extension RestaurantsListViewController {
             Foursquare.Client.ID.key: Foursquare.Client.ID.value,
             Foursquare.Client.Secret.key: Foursquare.Client.Secret.value
         ]
-        
-        print("Lat:"+LocationClient.shared.currentLatitude)
-        print("Lon:"+LocationClient.shared.currentLongitude)
-        print("***********************")
-        
+
         let request = ApiRequest(resource: Restaurant())
         
         tableView.refreshControl?.beginRefreshing()
