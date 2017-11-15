@@ -40,6 +40,7 @@ private extension LaunchViewController {
         }
         
         self.welcomeView = welcomeView
+        welcomeView.isHidden = true
         view.addSubview(welcomeView)
         
         welcomeView.frame = CGRect(
@@ -82,6 +83,7 @@ private extension LaunchViewController {
             guard let strongSelf = self else { return }
             guard let welcomeView = strongSelf.welcomeView else { return }
             if transition == .show {
+                welcomeView.isHidden = false
                 welcomeView.frame.origin.y = welcomeView.bounds.height
             }else {
                 welcomeView.frame.origin.y = strongSelf.view.bounds.height
