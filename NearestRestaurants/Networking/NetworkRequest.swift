@@ -8,18 +8,14 @@
 
 import UIKit
 
-
 //MARK: - Network Request & Implementation
 private protocol NetworkRequest: class {
     
     associatedtype Model
-    
     func decode(_ data: Data) -> Model?
-    
     func load(withURLParameters parameters: JSON?,
               onSuccess success: @escaping (Model?) -> Void,
               onFailure failure: @escaping (NetworkError) -> Void)
-    
 }
 
 private extension NetworkRequest {
@@ -88,23 +84,43 @@ class ApiRequest<Resource: ApiResource>: NetworkRequest {
 }
 
 //MARK: - Image Request
-class ImageRequest: NetworkRequest {
+class ImageLoadOperation: Operation, NetworkRequest {
     
     private let url: URL
-    
+    var image: UIImage?
+    var onSuccess: ((UIImage?) -> Void)?
+
     init(url: URL) {
         self.url = url
     }
     
+
+    override func main() {
+        
+        if isCancelled { return }
+        
+        load(withURLParameters: nil, onSuccess: { [weak self] (image) in
+            guard let strongSelf = self,
+                !strongSelf.isCancelled,
+                let image = image else {
+                    return
+            }
+            strongSelf.image = image
+            strongSelf.onSuccess?(image)
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+    }
+
     func decode(_ data: Data) -> UIImage? {
         return UIImage(data: data)
     }
     
-    
     func load(withURLParameters parameters: JSON?,
               onSuccess success: @escaping (UIImage?) -> Void,
               onFailure failure: @escaping (NetworkError) -> Void) {
-
+        
         load(url, onSuccess: success, onFailure: failure)
     }
+
 }

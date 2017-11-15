@@ -24,11 +24,13 @@ class RestaurantInfoCell: UITableViewCell {
         restaurantImageView.clipsToBounds = true
     }
     
+
     //MARK: Properties
+    private static let defaultImage = #imageLiteral(resourceName: "RestaurantIcon2")
+    
     var restaurant: Restaurant? {
         didSet {
             if let restaurant = restaurant {
-                restaurantImageView.image = restaurant.image
                 nameLabel.text = restaurant.name
                 addressLabel.text = restaurant.category
                 distanceLabel.text = restaurant.distanceDescription
@@ -36,4 +38,16 @@ class RestaurantInfoCell: UITableViewCell {
         }
     }
     
+    var restaurantImage: UIImage? {
+        didSet{
+            if let restaurantImage = restaurantImage {
+                restaurantImageView.image = restaurantImage
+            }
+        }
+    }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        restaurantImageView.image = RestaurantInfoCell.defaultImage
+    }
 }

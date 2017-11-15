@@ -14,7 +14,6 @@ class Restaurant {
     private var address = ""
     var name = ""
     var imageURL: URL?
-    var image: UIImage = #imageLiteral(resourceName: "RestaurantIcon2")
     var category = ""
     var latitude: Double = 0
     var longitude: Double = 0

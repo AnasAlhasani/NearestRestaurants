@@ -24,14 +24,16 @@ class RestaurantsListViewController: UIViewController {
     }
     
     //MARK: Properties
+    private let imageLoadQueue = OperationQueue()
+    private var imageLoadOperations = [IndexPath: ImageLoadOperation]()
     private var restaurants: [Restaurant] = []
     
     //MARK: View LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        clearCache()
         LocationClient.shared.startUpdatinglocation()
         configureTableView()
-
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -49,10 +51,20 @@ class RestaurantsListViewController: UIViewController {
 //MARK: - Configuration
 private extension RestaurantsListViewController {
     
+    func clearCache() {
+        #if CLEAR_CACHES
+            let cachesFolderItems = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true)
+            for item in cachesFolderItems {
+                try? FileManager.default.removeItem(atPath: item)
+            }
+        #endif
+    }
+    
     func configureTableView() {
         tableView.register(RestaurantInfoCell.self)
         tableView.separatorInset = .zero
         tableView.tableFooterView = UIView(frame: .zero)
+        tableView.prefetchDataSource = self
     }
 }
 
@@ -64,7 +76,7 @@ private extension RestaurantsListViewController {
             Foursquare.SearchKeys.Location: "\(LocationClient.shared.currentLatitude),\(LocationClient.shared.currentLongitude)",
             Foursquare.SearchKeys.venueDate : Date().getStringDate(withFormat: .venue),
             Foursquare.SearchKeys.Intent: "food",
-            Foursquare.SearchKeys.Limit: "10",
+            Foursquare.SearchKeys.Limit: "50",
             Foursquare.Client.ID.key: Foursquare.Client.ID.value,
             Foursquare.Client.Secret.key: Foursquare.Client.Secret.value
         ]
@@ -79,41 +91,28 @@ private extension RestaurantsListViewController {
             guard let items = items else { return }
             
             strongSelf.restaurants = items.sorted(by: { $0.distance < $1.distance })
-            
-            let imageURLs = strongSelf.restaurants.map({ $0.imageURL })
-            strongSelf.getImages(fromURLs: imageURLs, onComplete: {
-                strongSelf.tableView.reloadData()
-                strongSelf.tableView.refreshControl?.endRefreshing()
-            })
-            
+            strongSelf.tableView.reloadData()
+            strongSelf.tableView.refreshControl?.endRefreshing()
+
         }) { [weak self] error in
             guard let strongSelf = self else { return }
             strongSelf.handleRequestError()
         }
     }
     
-    func getImages(fromURLs urls: [URL?],
-                   onComplete: @escaping () -> Void) {
+    func loadImage(_ url: URL?, at indexPath: IndexPath, forCell cell: RestaurantInfoCell) {
         
-        for (index, url) in urls.enumerated() {
-            
-            guard let url = url else { continue }
-            let imageRequest = ImageRequest(url: url)
-            
-            imageRequest.load(withURLParameters: nil, onSuccess: { [weak self] image in
-                
-                guard let strongSelf = self else { return }
-                guard let restaurantImage = image else { return }
-                strongSelf.restaurants[index].image = restaurantImage
-                guard index == urls.endIndex - 1 else { return }
-                onComplete()
-                
-            }, onFailure: { error in
-                print(error.localizedDescription)
-                guard index == urls.endIndex - 1 else { return }
-                onComplete()
-            })
+        guard let url = url else { return }
+        
+        let imageLoadOperation = ImageLoadOperation(url: url)
+        
+        imageLoadOperation.onSuccess = { [weak self] (image) in
+            guard let strongSelf = self else { return }
+            cell.restaurantImage = image
+            strongSelf.imageLoadOperations.removeValue(forKey: indexPath)
         }
+        imageLoadQueue.addOperation(imageLoadOperation)
+        imageLoadOperations[indexPath] = imageLoadOperation
     }
     
     func handleRequestError() {
@@ -136,8 +135,23 @@ extension RestaurantsListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: RestaurantInfoCell = tableView.dequeueReusableCell(at: indexPath)
         cell.selectionStyle = .none
-        cell.restaurant = restaurants[indexPath.row]
+        let restaurant = restaurants[indexPath.row]
+        cell.restaurant = restaurant
+        
+        if let imageLoadOperation = imageLoadOperations[indexPath],
+            let image = imageLoadOperation.image {
+            cell.restaurantImage = image
+        } else {
+            loadImage(restaurant.imageURL, at: indexPath, forCell: cell)
+        }
         return cell
+    }
+    
+    
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard let imageLoadOperation = imageLoadOperations[indexPath] else { return }
+        imageLoadOperation.cancel()
+        imageLoadOperations.removeValue(forKey: indexPath)
     }
 }
 
@@ -150,4 +164,34 @@ extension RestaurantsListViewController: UITableViewDelegate {
         navigationController?.pushViewController(controller, animated: true)
     }
 }
+
+// MARK: - UICollectionViewDataSourcePrefetching
+extension RestaurantsListViewController: UITableViewDataSourcePrefetching {
+    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        
+        for indexPath in indexPaths {
+            if let _ = imageLoadOperations[indexPath] {
+                return
+            }
+            let imageLoadOperation = ImageLoadOperation(url: restaurants[indexPath.row].imageURL!)
+            imageLoadQueue.addOperation(imageLoadOperation)
+            imageLoadOperations[indexPath] = imageLoadOperation
+            
+            
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: [IndexPath]) {
+        for indexPath in indexPaths {
+            guard let imageLoadOperation = imageLoadOperations[indexPath] else {
+                return
+            }
+            imageLoadOperation.cancel()
+            imageLoadOperations.removeValue(forKey: indexPath)
+        }
+    }
+}
+
+
+
 
