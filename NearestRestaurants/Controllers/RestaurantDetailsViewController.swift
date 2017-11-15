@@ -76,13 +76,26 @@ private extension RestaurantDetailsViewController {
     }
     
     @IBAction func navigationButtonTapped(_ sender: UIButton) {
+        
         displayDirectionsAlert { [weak self] app in
             
             guard let strongSelf = self else { return }
-
+            
+            guard let latitude = strongSelf.restaurant?.latitude,
+                let longitude = strongSelf.restaurant?.longitude else {
+                    return
+            }
+            
             switch app {
-                case .appleMaps: print("")
-                case .googleMaps: print("")
+                case .appleMaps:
+                    UIApplication.openURL([
+                        "http://maps.apple.com/maps?saddr=&daddr=\(latitude),\(longitude)"
+                    ])
+                case .googleMaps:
+                    UIApplication.openURL([
+                        "comgooglemaps://?saddr=&daddr=\(latitude),\(longitude)&directionsmode=driving",
+                        "itms-apps://itunes.apple.com/app/id585027354"
+                    ])
             }
         }
     }
