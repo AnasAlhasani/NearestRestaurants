@@ -50,8 +50,8 @@ private extension LaunchViewController {
         )
         
         welcomeView.setPermession(
-            title: "Location",
-            message: "Restaurant app lets you the nearest restaurants to your current location"
+            title: "Restaurant App",
+            message: "Restaurant app lets you find the nearest restaurants to your current location."
         )
         
         welcomeView.onButtonTap = { [weak self] in
