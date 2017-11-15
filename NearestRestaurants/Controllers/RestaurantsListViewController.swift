@@ -76,7 +76,7 @@ private extension RestaurantsListViewController {
             Foursquare.SearchKeys.Location: "\(LocationClient.shared.currentLatitude),\(LocationClient.shared.currentLongitude)",
             Foursquare.SearchKeys.venueDate : Date().getStringDate(withFormat: .venue),
             Foursquare.SearchKeys.Intent: "food",
-            Foursquare.SearchKeys.Limit: "50",
+            Foursquare.SearchKeys.Limit: "10",
             Foursquare.Client.ID.key: Foursquare.Client.ID.value,
             Foursquare.Client.Secret.key: Foursquare.Client.Secret.value
         ]
