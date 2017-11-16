@@ -12,7 +12,7 @@ import CoreLocation
 class LocationClient: NSObject {
     
     var currentLocation = CLLocation()
-    private var locationManager: CLLocationManager!
+    var locationManager: CLLocationManager?
     
     private lazy var dispatchOnce: () -> Void = {
         NotificationCenter.default.post(
@@ -30,16 +30,21 @@ class LocationClient: NSObject {
         return Static.instance
     }
     
-    func startUpdatinglocation() {
+    
+    func setup() {
         locationManager = CLLocationManager()
-        locationManager.delegate = LocationClient.shared
-        locationManager.pausesLocationUpdatesAutomatically = true
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.startUpdatingLocation()
+        locationManager?.delegate = LocationClient.shared
+        locationManager?.pausesLocationUpdatesAutomatically = true
+        locationManager?.requestWhenInUseAuthorization()
+        startUpdatinglocation()
+    }
+    
+    func startUpdatinglocation() {
+        locationManager?.startUpdatingLocation()
     }
     
     func stopUpdatinglocation() {
-        locationManager.stopUpdatingLocation()
+        locationManager?.stopUpdatingLocation()
     }
     
     
@@ -69,6 +74,7 @@ extension LocationClient: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         currentLocation = locations.last!
+        stopUpdatinglocation()
         dispatchOnce()
     }
 }

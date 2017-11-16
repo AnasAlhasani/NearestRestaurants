@@ -31,35 +31,27 @@ class RestaurantsListViewController: UIViewController {
     //MARK: View LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        clearCache()
-        LocationClient.shared.startUpdatinglocation()
+
+        LocationClient.shared.setup()
         configureTableView()
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(getNearestRestaurants),
+            name: Constant.NotificationCenterKeys.updateLocations,
+            object: nil
+        )
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         title = "Nearest Restaurants"
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        NotificationCenter.default.addObserver(self, selector: #selector(getNearestRestaurants), name: Constant.NotificationCenterKeys.updateLocations, object: nil)
-    }
 
 }
 
 //MARK: - Configuration
 private extension RestaurantsListViewController {
-    
-    func clearCache() {
-        #if CLEAR_CACHES
-            let cachesFolderItems = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true)
-            for item in cachesFolderItems {
-                try? FileManager.default.removeItem(atPath: item)
-            }
-        #endif
-    }
-    
+
     func configureTableView() {
         tableView.register(RestaurantInfoCell.self)
         tableView.separatorInset = .zero
@@ -72,6 +64,8 @@ private extension RestaurantsListViewController {
 private extension RestaurantsListViewController {
     
     @objc func getNearestRestaurants() {
+        LocationClient.shared.startUpdatinglocation()
+        
         let parameters: [String: Any] = [
             Foursquare.SearchKeys.Location: "\(LocationClient.shared.currentLatitude),\(LocationClient.shared.currentLongitude)",
             Foursquare.SearchKeys.venueDate : Date().getStringDate(withFormat: .venue),
@@ -81,6 +75,7 @@ private extension RestaurantsListViewController {
             Foursquare.Client.Secret.key: Foursquare.Client.Secret.value
         ]
 
+        print("\(LocationClient.shared.currentLatitude)")
         let request = ApiRequest(resource: Restaurant())
         
         tableView.refreshControl?.beginRefreshing()
@@ -89,7 +84,6 @@ private extension RestaurantsListViewController {
             
             guard let strongSelf = self else { return }
             guard let items = items else { return }
-            
             strongSelf.restaurants = items.sorted(by: { $0.distance < $1.distance })
             strongSelf.tableView.reloadData()
             strongSelf.tableView.refreshControl?.endRefreshing()
