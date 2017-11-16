@@ -16,6 +16,7 @@ class RestaurantDetailsViewController: UIViewController {
     @IBOutlet private weak var navigationButton: UIButton!
     
     //MARK: Properties
+    private let annotationIdentifier = "Place"
     var restaurant: Restaurant? {
         didSet{
             if let restaurant = restaurant {
@@ -29,9 +30,10 @@ class RestaurantDetailsViewController: UIViewController {
         super.viewDidLoad()
         navigationController?.navigationBar.topItem?.title = ""
         navigationButton.layer.cornerRadius = 5
+        mapView.delegate = self
         addCurrentLocationButtonItem()
+        mapView.addAnnotation(restaurant!)
         zoomToCurrentLocation()
-        
     }
     
 }
@@ -98,6 +100,24 @@ private extension RestaurantDetailsViewController {
                     ])
             }
         }
+    }
+}
+
+extension RestaurantDetailsViewController: MKMapViewDelegate {
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        
+        if annotation is MKUserLocation { return nil }
+        
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: annotationIdentifier) as? MKPinAnnotationView
+        if annotationView == nil {
+            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: annotationIdentifier)
+        } else {
+            annotationView?.annotation = annotation
+        }
+        annotationView?.canShowCallout = false
+        annotationView?.image = #imageLiteral(resourceName: "Burger")
+        return annotationView
     }
 }
 

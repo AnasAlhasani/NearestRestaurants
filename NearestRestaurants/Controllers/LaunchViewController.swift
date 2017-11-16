@@ -79,7 +79,7 @@ private extension LaunchViewController {
     }
     
     func animateWelcomeView(_ transition: WelcomeTransition, onComplete: (() -> Void)?) {
-        UIView.animate(withDuration: 1, animations: { [weak self] in
+        UIView.animate(withDuration: 0.7, animations: { [weak self] in
             guard let strongSelf = self else { return }
             guard let welcomeView = strongSelf.welcomeView else { return }
             if transition == .show {

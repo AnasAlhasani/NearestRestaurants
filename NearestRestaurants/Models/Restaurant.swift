@@ -7,9 +7,10 @@
 //
 
 import UIKit
+import MapKit
 
-class Restaurant {
-    
+class Restaurant: NSObject, MKAnnotation {
+
     //MARK: Properites
     private var address = ""
     var name = ""
@@ -23,6 +24,9 @@ class Restaurant {
         return "\(distance) m \(address)"
     }
  
+    var coordinate: CLLocationCoordinate2D {
+        return CLLocationCoordinate2DMake(latitude, longitude)
+    }
 }
 
 //MARK: - Constants
