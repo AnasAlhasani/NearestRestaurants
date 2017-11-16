@@ -40,6 +40,7 @@ class LocationClient: NSObject {
     }
     
     func startUpdatinglocation() {
+        guard isAuthorizedWhenInUse else { return }
         locationManager?.startUpdatingLocation()
     }
     
@@ -47,6 +48,14 @@ class LocationClient: NSObject {
         locationManager?.stopUpdatingLocation()
     }
     
+    
+    var isAuthorizedWhenInUse: Bool {
+        if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
+            return true
+        }else {
+            return false
+        }
+    }
     
     var currentLatitude: String {
         return String(format: "%f",
