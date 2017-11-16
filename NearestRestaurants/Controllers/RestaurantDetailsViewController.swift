@@ -53,19 +53,20 @@ private extension RestaurantDetailsViewController {
     }
     
     func zoomToCurrentLocation() {
+        guard let restaurant = restaurant else { return }
+        
         let userLocation = LocationClient.shared.currentLocation
+        
+        let restaurantLocation = CLLocation(latitude: restaurant.latitude, longitude: restaurant.longitude)
+        
+        let distance = userLocation.distance(from: restaurantLocation)
+        
+        let region = MKCoordinateRegionMakeWithDistance(userLocation.coordinate, 2 * distance, 2 * distance)
+        
+        let adjustRegion = mapView.regionThatFits(region)
+        
+        mapView.setRegion(adjustRegion, animated:true)
 
-        let center = CLLocationCoordinate2D(
-            latitude: userLocation.coordinate.latitude,
-            longitude: userLocation.coordinate.longitude
-        )
-        
-        let region = MKCoordinateRegion(
-            center: center,
-            span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
-        )
-        
-        mapView.setRegion(region, animated: true)
         mapView.showsUserLocation = true
     }
 }
