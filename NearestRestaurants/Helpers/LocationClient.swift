@@ -36,27 +36,16 @@ class LocationClient: NSObject {
         locationManager?.delegate = LocationClient.shared
         locationManager?.pausesLocationUpdatesAutomatically = true
         locationManager?.requestWhenInUseAuthorization()
-        startUpdatinglocation()
     }
     
     func startUpdatinglocation() {
-        guard isAuthorizedWhenInUse else { return }
         locationManager?.startUpdatingLocation()
     }
     
     func stopUpdatinglocation() {
         locationManager?.stopUpdatingLocation()
     }
-    
-    
-    var isAuthorizedWhenInUse: Bool {
-        if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
-            return true
-        }else {
-            return false
-        }
-    }
-    
+
     var currentLatitude: String {
         return String(format: "%f",
                       LocationClient.shared.currentLocation.coordinate.latitude)
@@ -71,6 +60,12 @@ class LocationClient: NSObject {
 
 //MARK: - CLLocationManagerDelegate
 extension LocationClient: CLLocationManagerDelegate {
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        if status == .authorizedWhenInUse {
+            startUpdatinglocation()
+        }
+    }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         manager.stopUpdatingLocation()
